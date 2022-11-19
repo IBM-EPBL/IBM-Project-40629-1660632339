@@ -1,0 +1,3915 @@
+{
+  "name": "Banking chatbot-action",
+  "type": "action",
+  "counts": {
+    "actions": 12,
+    "intents": 10,
+    "entities": 7,
+    "data_types": 0,
+    "global_variables": 0
+  },
+  "status": "Available",
+  "language": "en",
+  "skill_id": "fdb8ea9f-a7ab-4ec5-8360-472eb2b20d02",
+  "workspace": {
+    "actions": [
+      {
+        "steps": [
+          {
+            "step": "step_001",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "I'm afraid I don't understand. I can connect you to an agent."
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "connect_to_agent",
+              "response": {
+                "transfer_info": {
+                  "target": {}
+                },
+                "agent_available": {
+                  "message": "Let's send you to an available agent."
+                },
+                "agent_unavailable": {
+                  "message": "There are no agents available at this time. When one becomes available, we'll connect you."
+                },
+                "message_to_human_agent": ""
+              }
+            },
+            "variable": "step_001",
+            "condition": {
+              "eq": [
+                {
+                  "system_variable": "fallback_reason"
+                },
+                {
+                  "scalar": "Step validation failed"
+                }
+              ]
+            },
+            "next_step": "step_002"
+          },
+          {
+            "step": "step_002",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "Sorry I couldn't assist you. I will connect you to an agent right away."
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "connect_to_agent",
+              "response": {
+                "transfer_info": {
+                  "target": {}
+                },
+                "agent_available": {
+                  "message": "Let's send you to an available agent."
+                },
+                "agent_unavailable": {
+                  "message": "There are no agents available at this time. When one becomes available, we'll connect you."
+                },
+                "message_to_human_agent": ""
+              }
+            },
+            "variable": "step_002",
+            "condition": {
+              "eq": [
+                {
+                  "system_variable": "fallback_reason"
+                },
+                {
+                  "scalar": "Agent requested"
+                }
+              ]
+            },
+            "next_step": "step_003"
+          },
+          {
+            "step": "step_003",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "I am afraid I do not understand what you are asking, let me connect you to an agent."
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "connect_to_agent",
+              "response": {
+                "transfer_info": {
+                  "target": {}
+                },
+                "agent_available": {
+                  "message": "Let's send you to an available agent."
+                },
+                "agent_unavailable": {
+                  "message": "There are no agents available at this time. When one becomes available, we'll connect you."
+                },
+                "message_to_human_agent": ""
+              }
+            },
+            "variable": "step_003",
+            "condition": {
+              "eq": [
+                {
+                  "system_variable": "fallback_reason"
+                },
+                {
+                  "scalar": "No action matches"
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Fallback",
+        "action": "fallback",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "fallback_connect_to_agent"
+        },
+        "variables": [
+          {
+            "title": "I'm afraid I don't understand. I can connect you to an agent.",
+            "variable": "step_001",
+            "data_type": "any"
+          },
+          {
+            "title": "Sorry I couldn't assist you. I will connect you to an agent righ",
+            "variable": "step_002",
+            "data_type": "any"
+          },
+          {
+            "title": "I am afraid I do not understand what you are asking, let me conn",
+            "variable": "step_003",
+            "data_type": "any"
+          }
+        ],
+        "next_action": "anything_else",
+        "disambiguation_opt_out": true
+      },
+      {
+        "steps": [
+          {
+            "step": "step_001",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "kindly reach out to our customer care executive.\n\ncontact us @9876543210"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_001",
+            "condition": {
+              "lte": [
+                {
+                  "system_variable": "no_action_matches_count"
+                },
+                {
+                  "scalar": 3
+                }
+              ]
+            },
+            "next_step": "step_002"
+          },
+          {
+            "step": "step_002",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": ""
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action_and_end",
+              "invoke_action": {
+                "action": "fallback",
+                "parameters": null,
+                "result_variable": "step_002_result_1"
+              }
+            },
+            "variable": "step_002",
+            "condition": {
+              "gt": [
+                {
+                  "system_variable": "no_action_matches_count"
+                },
+                {
+                  "scalar": 3
+                }
+              ]
+            }
+          }
+        ],
+        "title": "No action matches",
+        "action": "anything_else",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "expression": "anything_else"
+        },
+        "variables": [
+          {
+            "title": "kindly reach out to our customer care executive. contact us @987",
+            "variable": "step_001",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_002",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_002_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_104_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_162_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_171_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_241_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_267_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_418_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_500_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_512_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_553_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_556_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_572_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_585_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_640_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_655_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_807_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_830_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_850_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_956_result_1",
+            "data_type": "any"
+          }
+        ],
+        "disambiguation_opt_out": true
+      },
+      {
+        "steps": [
+          {
+            "step": "step_001",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text": "Welcome, how can I assist you?"
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_001"
+          }
+        ],
+        "title": "Greet customer",
+        "action": "welcome",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "expression": "welcome"
+        },
+        "variables": [
+          {
+            "variable": "step_001",
+            "data_type": "any"
+          }
+        ],
+        "next_action": "action_32649",
+        "disambiguation_opt_out": true
+      },
+      {
+        "steps": [
+          {
+            "step": "step_446",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Good to see you"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_14232",
+                "parameters": null,
+                "result_variable": "step_446_result_1"
+              }
+            },
+            "variable": "step_446"
+          }
+        ],
+        "title": "Greeting",
+        "action": "action_40275",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_40275_intent_32670"
+        },
+        "variables": [
+          {
+            "title": "Good to see you",
+            "variable": "step_446",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_446_result_1",
+            "data_type": "any"
+          }
+        ],
+        "next_action": "fallback",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true
+        },
+        "disambiguation_opt_out": false
+      },
+      {
+        "steps": [
+          {
+            "step": "step_705",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Do you want know about some other services?"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "Yes",
+                      "value": {
+                        "input": {
+                          "text": "Yes"
+                        }
+                      }
+                    },
+                    {
+                      "label": "No",
+                      "value": {
+                        "input": {
+                          "text": "No"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            },
+            "handlers": [
+              {
+                "type": "not_found",
+                "title": "validation_not_found_handler",
+                "output": {
+                  "generic": [
+                    {
+                      "values": [
+                        {
+                          "text": "I didn't catch that. Select a valid option:"
+                        }
+                      ],
+                      "response_type": "text"
+                    }
+                  ]
+                },
+                "handler": "validation_not_found_handler",
+                "resolver": {
+                  "type": "prompt_again"
+                },
+                "next_handler": "validation_not_found_max_tries_handler"
+              },
+              {
+                "type": "not_found_max_tries",
+                "title": "validation_not_found_max_tries_handler",
+                "handler": "validation_not_found_max_tries_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "question": {
+              "entity": "entity_10364",
+              "max_tries": 3
+            },
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_705",
+            "next_step": "step_549"
+          },
+          {
+            "step": "step_549",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Thank you Have a nice day!"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_549",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_705"
+                },
+                {
+                  "value": "No",
+                  "from_entity": "entity_10364"
+                }
+              ]
+            },
+            "next_step": "step_648"
+          },
+          {
+            "step": "step_648",
+            "output": {
+              "generic": []
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_14232",
+                "parameters": null,
+                "result_variable": "step_648_result_1"
+              }
+            },
+            "variable": "step_648",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_705"
+                },
+                {
+                  "value": "Yes",
+                  "from_entity": "entity_10364"
+                }
+              ]
+            }
+          }
+        ],
+        "title": "End",
+        "action": "action_42203",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_42203_intent_15212"
+        },
+        "variables": [
+          {
+            "variable": "step_104_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_162_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_171_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_178_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_241_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_267_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_279_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_348_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_418_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_446_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_500_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_512_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "Thank you Have a nice day!",
+            "variable": "step_549",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_553_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_556_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_572_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_585_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_640_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "",
+            "variable": "step_648",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_648_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_655_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "Do you want know about some other services?",
+            "variable": "step_705",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_807_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_830_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_850_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_956_result_1",
+            "data_type": "any"
+          }
+        ],
+        "next_action": "action_21826",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true
+        },
+        "disambiguation_opt_out": false
+      },
+      {
+        "steps": [
+          {
+            "step": "step_279",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "How can I help you?"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "Savings Account",
+                      "value": {
+                        "input": {
+                          "text": "Savings Account"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Current Account",
+                      "value": {
+                        "input": {
+                          "text": "Current Account"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Loan enquiry",
+                      "value": {
+                        "input": {
+                          "text": "Loan enquiry"
+                        }
+                      }
+                    },
+                    {
+                      "label": "General query",
+                      "value": {
+                        "input": {
+                          "text": "General query"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Net banking",
+                      "value": {
+                        "input": {
+                          "text": "Net banking"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            },
+            "handlers": [
+              {
+                "type": "not_found",
+                "title": "validation_not_found_handler",
+                "output": {
+                  "generic": [
+                    {
+                      "values": [
+                        {
+                          "text": "I didn't catch that. Select a valid option:"
+                        }
+                      ],
+                      "response_type": "text"
+                    }
+                  ]
+                },
+                "handler": "validation_not_found_handler",
+                "resolver": {
+                  "type": "prompt_again"
+                },
+                "next_handler": "validation_not_found_max_tries_handler"
+              },
+              {
+                "type": "not_found_max_tries",
+                "title": "validation_not_found_max_tries_handler",
+                "handler": "validation_not_found_max_tries_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "question": {
+              "entity": "entity_22119",
+              "max_tries": 3
+            },
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_279",
+            "next_step": "step_178"
+          },
+          {
+            "step": "step_178",
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_21826",
+                "parameters": null,
+                "result_variable": "step_178_result_1"
+              }
+            },
+            "variable": "step_178",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_279"
+                },
+                {
+                  "value": "Savings Account",
+                  "from_entity": "entity_22119"
+                }
+              ]
+            },
+            "next_step": "step_541"
+          },
+          {
+            "step": "step_541",
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_11109",
+                "parameters": null,
+                "result_variable": "step_541_result_1"
+              }
+            },
+            "variable": "step_541",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_279"
+                },
+                {
+                  "value": "Current Account",
+                  "from_entity": "entity_22119"
+                }
+              ]
+            },
+            "next_step": "step_850"
+          },
+          {
+            "step": "step_850",
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_32649",
+                "parameters": null,
+                "result_variable": "step_850_result_1"
+              }
+            },
+            "variable": "step_850",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_279"
+                },
+                {
+                  "value": "Loan enquiry",
+                  "from_entity": "entity_22119"
+                }
+              ]
+            },
+            "next_step": "step_267"
+          },
+          {
+            "step": "step_267",
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_14515",
+                "parameters": null,
+                "result_variable": "step_267_result_1"
+              }
+            },
+            "variable": "step_267",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_279"
+                },
+                {
+                  "value": "General query",
+                  "from_entity": "entity_22119"
+                }
+              ]
+            },
+            "next_step": "step_512"
+          },
+          {
+            "step": "step_512",
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_23260",
+                "parameters": null,
+                "result_variable": "step_512_result_1"
+              }
+            },
+            "variable": "step_512",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_279"
+                },
+                {
+                  "value": "Net banking",
+                  "from_entity": "entity_22119"
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Index",
+        "action": "action_14232",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_14232_intent_42493"
+        },
+        "variables": [
+          {
+            "variable": "step_104_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_162_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_171_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "No response",
+            "variable": "step_178",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_178_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_241_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "No response",
+            "variable": "step_267",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_267_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "How can I help you?",
+            "variable": "step_279",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_279_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_348_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_413_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_418_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_446_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_500_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "No response",
+            "variable": "step_512",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_512_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "No response",
+            "variable": "step_541",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_541_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_553_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_556_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_572_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_585_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_640_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_648_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_655_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_792_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_806_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_807_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_830_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "No response",
+            "variable": "step_850",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_850_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_935_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_956_result_1",
+            "data_type": "any"
+          }
+        ],
+        "next_action": "action_42203",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true
+        },
+        "disambiguation_opt_out": false
+      },
+      {
+        "steps": [
+          {
+            "step": "step_459",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Which type of savings account do you want to create?"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "Regular savings account",
+                      "value": {
+                        "input": {
+                          "text": "Regular savings account"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Kids savings account",
+                      "value": {
+                        "input": {
+                          "text": "Kids savings account"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Zero balance savings account",
+                      "value": {
+                        "input": {
+                          "text": "Zero balance savings account"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            },
+            "handlers": [
+              {
+                "type": "not_found",
+                "title": "validation_not_found_handler",
+                "output": {
+                  "generic": [
+                    {
+                      "values": [
+                        {
+                          "text": "I didn't catch that. Select a valid option:"
+                        }
+                      ],
+                      "response_type": "text"
+                    }
+                  ]
+                },
+                "handler": "validation_not_found_handler",
+                "resolver": {
+                  "type": "prompt_again"
+                },
+                "next_handler": "validation_not_found_max_tries_handler"
+              },
+              {
+                "type": "not_found_max_tries",
+                "title": "validation_not_found_max_tries_handler",
+                "handler": "validation_not_found_max_tries_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "question": {
+              "entity": "entity_36531",
+              "max_tries": 3
+            },
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_459",
+            "next_step": "step_413"
+          },
+          {
+            "step": "step_413",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Awesome! Please take the following documents and head towards the nearest branch."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "1.Aadhar Card"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "2.Pan Card"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "3.Passport Size Photos"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "4.Guardians Aadhar Card"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_413_result_1"
+              }
+            },
+            "variable": "step_413",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_459"
+                },
+                {
+                  "value": "Kids savings account",
+                  "from_entity": "entity_36531"
+                }
+              ]
+            },
+            "next_step": "step_348"
+          },
+          {
+            "step": "step_348",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Great! Please take the following documents and head towards the nearest branch."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "1.Aadhar card"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "2.Pan card"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "3.Passport size photos"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_348_result_1"
+              }
+            },
+            "variable": "step_348",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_459"
+                },
+                {
+                  "value": "Regular savings account",
+                  "from_entity": "entity_36531"
+                }
+              ]
+            },
+            "next_step": "step_935"
+          },
+          {
+            "step": "step_935",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Awesome! Please take the following documents and head towards the nearest branch."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "1.Aadhar Card"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "2.Pan Card"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "3.Passport Size Photos"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_935_result_1"
+              }
+            },
+            "variable": "step_935",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_459"
+                },
+                {
+                  "value": "Zero balance savings account",
+                  "from_entity": "entity_36531"
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Savings",
+        "action": "action_21826",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_21826_intent_9559"
+        },
+        "variables": [
+          {
+            "variable": "step_178_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_279_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "Great! Please take the following documents and head towards the ",
+            "variable": "step_348",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_348_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "Awesome! Please take the following documents and head towards th",
+            "variable": "step_413",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_413_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_446_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "Which type of savings account do you want to create?",
+            "variable": "step_459",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_640_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_648_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_807_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_830_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_850_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "Awesome! Please take the following documents and head towards th",
+            "variable": "step_935",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_935_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_956_result_1",
+            "data_type": "any"
+          }
+        ],
+        "next_action": "action_11109",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true
+        },
+        "disambiguation_opt_out": false
+      },
+      {
+        "steps": [
+          {
+            "step": "step_312",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "What's your company type?"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "proprietorship",
+                      "value": {
+                        "input": {
+                          "text": "proprietorship"
+                        }
+                      }
+                    },
+                    {
+                      "label": "partnership",
+                      "value": {
+                        "input": {
+                          "text": "partnership"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            },
+            "handlers": [
+              {
+                "type": "not_found",
+                "title": "validation_not_found_handler",
+                "output": {
+                  "generic": [
+                    {
+                      "values": [
+                        {
+                          "text": "I didn't catch that. Select a valid option:"
+                        }
+                      ],
+                      "response_type": "text"
+                    }
+                  ]
+                },
+                "handler": "validation_not_found_handler",
+                "resolver": {
+                  "type": "prompt_again"
+                },
+                "next_handler": "validation_not_found_max_tries_handler"
+              },
+              {
+                "type": "not_found_max_tries",
+                "title": "validation_not_found_max_tries_handler",
+                "handler": "validation_not_found_max_tries_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "question": {
+              "entity": "entity_4939",
+              "max_tries": 3
+            },
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_312",
+            "next_step": "step_806"
+          },
+          {
+            "step": "step_806",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Please take the following documents and approach the closet branch."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "1.Income Tax Returns of the proprietor for the last 3 years"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "2.Company Agreement"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "3.Pan Card"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_806_result_1"
+              }
+            },
+            "variable": "step_806",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_312"
+                },
+                {
+                  "value": "proprietorship",
+                  "from_entity": "entity_4939"
+                }
+              ]
+            },
+            "next_step": "step_792"
+          },
+          {
+            "step": "step_792",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Please take the following documents and approach the closet branch."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "1.Income Tax Returns of the proprietor for the last 3 years"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "2.Company Agreement"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "3.Pan Card of both partners"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_792_result_1"
+              }
+            },
+            "variable": "step_792",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_312"
+                },
+                {
+                  "value": "partnership",
+                  "from_entity": "entity_4939"
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Current",
+        "action": "action_11109",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_11109_intent_41544"
+        },
+        "variables": [
+          {
+            "variable": "step_178_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_279_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "What's your company type?",
+            "variable": "step_312",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_348_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_413_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_446_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_640_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_648_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "Please take the following documents and approach the closet bran",
+            "variable": "step_792",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_792_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "Please take the following documents and approach the closet bran",
+            "variable": "step_806",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_806_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_807_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_830_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_850_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_935_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_956_result_1",
+            "data_type": "any"
+          }
+        ],
+        "next_action": "action_40275",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true
+        },
+        "disambiguation_opt_out": false
+      },
+      {
+        "steps": [
+          {
+            "step": "step_975",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "what type of loan are you looking at?"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "House loan",
+                      "value": {
+                        "input": {
+                          "text": "House loan"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Gold loan",
+                      "value": {
+                        "input": {
+                          "text": "Gold loan"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Topup loan",
+                      "value": {
+                        "input": {
+                          "text": "Topup loan"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Vehicle loan",
+                      "value": {
+                        "input": {
+                          "text": "Vehicle loan"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Student loan",
+                      "value": {
+                        "input": {
+                          "text": "Student loan"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            },
+            "handlers": [
+              {
+                "type": "not_found",
+                "title": "validation_not_found_handler",
+                "output": {
+                  "generic": [
+                    {
+                      "values": [
+                        {
+                          "text": "I didn't catch that. Select a valid option:"
+                        }
+                      ],
+                      "response_type": "text"
+                    }
+                  ]
+                },
+                "handler": "validation_not_found_handler",
+                "resolver": {
+                  "type": "prompt_again"
+                },
+                "next_handler": "validation_not_found_max_tries_handler"
+              },
+              {
+                "type": "not_found_max_tries",
+                "title": "validation_not_found_max_tries_handler",
+                "handler": "validation_not_found_max_tries_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "question": {
+              "entity": "entity_42021",
+              "max_tries": 3
+            },
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_975",
+            "next_step": "step_807"
+          },
+          {
+            "step": "step_807",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "To be eligible for a house loan please contact our bank service providers with all existing loan details."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_807_result_1"
+              }
+            },
+            "variable": "step_807",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_975"
+                },
+                {
+                  "value": "House loan",
+                  "from_entity": "entity_42021"
+                }
+              ]
+            },
+            "next_step": "step_956"
+          },
+          {
+            "step": "step_956",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "please approach the bank with the following documents."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "1.Pan card"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "2.Aadhar card"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "3.Passport size photo"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_956_result_1"
+              }
+            },
+            "variable": "step_956",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_975"
+                },
+                {
+                  "value": "Gold loan",
+                  "from_entity": "entity_42021"
+                }
+              ]
+            },
+            "next_step": "step_830"
+          },
+          {
+            "step": "step_830",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "To be eligible for a top-up loan please contact our bank service providers with all existing loan details."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_830_result_1"
+              }
+            },
+            "variable": "step_830",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_975"
+                },
+                {
+                  "value": "Topup loan",
+                  "from_entity": "entity_42021"
+                }
+              ]
+            },
+            "next_step": "step_640"
+          },
+          {
+            "step": "step_640",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Kindly approach the bank with the following documents."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "1.Automobile Invoice"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "2.Pan card"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "3.Income Tax Returns for the last three years"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_640_result_1"
+              }
+            },
+            "variable": "step_640",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_975"
+                },
+                {
+                  "value": "Vehicle loan",
+                  "from_entity": "entity_42021"
+                }
+              ]
+            },
+            "next_step": "step_500"
+          },
+          {
+            "step": "step_500",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "please approach the bank with the following documents."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "1.Acceptance Letter from institution"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "2.Pan card"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "3.Passport size photo"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_500_result_1"
+              }
+            },
+            "variable": "step_500",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_975"
+                },
+                {
+                  "value": "Student loan",
+                  "from_entity": "entity_42021"
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Loan",
+        "action": "action_32649",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_32649_intent_33234"
+        },
+        "variables": [
+          {
+            "title": "please approach the bank with the following documents.",
+            "variable": "step_500",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_500_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "Kindly approach the bank with the following documents.",
+            "variable": "step_640",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_640_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "To be eligible for a house loan please contact our bank service ",
+            "variable": "step_807",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_807_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "To be eligible for a top-up loan please contact our bank service",
+            "variable": "step_830",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_830_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_850_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "please approach the bank with the following documents.",
+            "variable": "step_956",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_956_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "what type of loan are you looking at?",
+            "variable": "step_975",
+            "data_type": "any"
+          }
+        ],
+        "next_action": "action_14515",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true
+        },
+        "disambiguation_opt_out": false
+      },
+      {
+        "steps": [
+          {
+            "step": "step_259",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "what queries do you have regarding Net Banking?"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "what is Net Banking?",
+                      "value": {
+                        "input": {
+                          "text": "what is Net Banking?"
+                        }
+                      }
+                    },
+                    {
+                      "label": "How do I register for Net Banking?",
+                      "value": {
+                        "input": {
+                          "text": "How do I register for Net Banking?"
+                        }
+                      }
+                    },
+                    {
+                      "label": "what are the features of Net Banking?",
+                      "value": {
+                        "input": {
+                          "text": "what are the features of Net Banking?"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Facing errors in Net Banking?",
+                      "value": {
+                        "input": {
+                          "text": "Facing errors in Net Banking?"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            },
+            "handlers": [
+              {
+                "type": "not_found",
+                "title": "validation_not_found_handler",
+                "output": {
+                  "generic": [
+                    {
+                      "values": [
+                        {
+                          "text": "I didn't catch that. Select a valid option:"
+                        }
+                      ],
+                      "response_type": "text"
+                    }
+                  ]
+                },
+                "handler": "validation_not_found_handler",
+                "resolver": {
+                  "type": "prompt_again"
+                },
+                "next_handler": "validation_not_found_max_tries_handler"
+              },
+              {
+                "type": "not_found_max_tries",
+                "title": "validation_not_found_max_tries_handler",
+                "handler": "validation_not_found_max_tries_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "question": {
+              "entity": "entity_38021",
+              "max_tries": 3
+            },
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_259",
+            "next_step": "step_556"
+          },
+          {
+            "step": "step_556",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "The facility offered by the bank allows customers to use banking services over the internet. customers need not visit their bank's branch office to avail each and every service."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_556_result_1"
+              }
+            },
+            "variable": "step_556",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_259"
+                },
+                {
+                  "value": "what is Net Banking?",
+                  "from_entity": "entity_38021"
+                }
+              ]
+            },
+            "next_step": "step_162"
+          },
+          {
+            "step": "step_162",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "please download and fill up the net banking requisition from and submit it to your home branch."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_162_result_1"
+              }
+            },
+            "variable": "step_162",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_259"
+                },
+                {
+                  "value": "How do I register for Net Banking?",
+                  "from_entity": "entity_38021"
+                }
+              ]
+            },
+            "next_step": "step_553"
+          },
+          {
+            "step": "step_553",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "1.check the account statement online."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "2.open a fixed deposit account."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "3.pay utility bills such as water bills and electricity bills."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "4.Make merchant payments."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "5.Transfer funds."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "6.order a cheque book."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "7.Buy general insurance."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "8.Recharge prepaid mobile/DTH."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_553_result_1"
+              }
+            },
+            "variable": "step_553",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_259"
+                },
+                {
+                  "value": "what are the features of Net Banking?",
+                  "from_entity": "entity_38021"
+                }
+              ]
+            },
+            "next_step": "step_418"
+          },
+          {
+            "step": "step_418",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "please contact our customer care executive or approach the closet branch."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_418_result_1"
+              }
+            },
+            "variable": "step_418",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_259"
+                },
+                {
+                  "value": "Facing errors in Net Banking?",
+                  "from_entity": "entity_38021"
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Net Banking",
+        "action": "action_23260",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_23260_intent_14492"
+        },
+        "variables": [
+          {
+            "variable": "step_104_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "please download and fill up the net banking requisition from and",
+            "variable": "step_162",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_162_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_171_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_241_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "what queries do you have regarding Net Banking?",
+            "variable": "step_259",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_267_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "please contact our customer care executive or approach the close",
+            "variable": "step_418",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_418_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_500_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "1.check the account statement online.",
+            "variable": "step_553",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_553_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "The facility offered by the bank allows customers to use banking",
+            "variable": "step_556",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_556_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_572_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_585_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_640_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_655_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_807_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_830_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_850_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_956_result_1",
+            "data_type": "any"
+          }
+        ],
+        "next_action": "action_41074",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true
+        },
+        "disambiguation_opt_out": false
+      },
+      {
+        "steps": [
+          {
+            "step": "step_891",
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_891"
+          }
+        ],
+        "title": "End greeting",
+        "action": "action_41074",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_41074_intent_49220"
+        },
+        "variables": [
+          {
+            "variable": "step_104_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_162_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_171_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_241_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_267_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_418_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_500_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_512_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_553_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_556_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_572_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_585_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_640_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_655_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_807_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_830_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_850_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "No response",
+            "variable": "step_891",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_956_result_1",
+            "data_type": "any"
+          }
+        ],
+        "next_action": "action_14232",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true
+        },
+        "disambiguation_opt_out": false
+      },
+      {
+        "steps": [
+          {
+            "step": "step_266",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Select the general queries listed below."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "Bank working days",
+                      "value": {
+                        "input": {
+                          "text": "Bank working days"
+                        }
+                      }
+                    },
+                    {
+                      "label": "List of Branches",
+                      "value": {
+                        "input": {
+                          "text": "List of Branches"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Storage Locker Facility",
+                      "value": {
+                        "input": {
+                          "text": "Storage Locker Facility"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Currency Conversion Facility",
+                      "value": {
+                        "input": {
+                          "text": "Currency Conversion Facility"
+                        }
+                      }
+                    },
+                    {
+                      "label": "CIBIL",
+                      "value": {
+                        "input": {
+                          "text": "CIBIL"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Find a nearest branch",
+                      "value": {
+                        "input": {
+                          "text": "Find a nearest branch"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            },
+            "handlers": [
+              {
+                "type": "not_found",
+                "title": "validation_not_found_handler",
+                "output": {
+                  "generic": [
+                    {
+                      "values": [
+                        {
+                          "text": "I didn't catch that. Select a valid option:"
+                        }
+                      ],
+                      "response_type": "text"
+                    }
+                  ]
+                },
+                "handler": "validation_not_found_handler",
+                "resolver": {
+                  "type": "prompt_again"
+                },
+                "next_handler": "validation_not_found_max_tries_handler"
+              },
+              {
+                "type": "not_found_max_tries",
+                "title": "validation_not_found_max_tries_handler",
+                "handler": "validation_not_found_max_tries_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "question": {
+              "entity": "entity_13477",
+              "max_tries": 3
+            },
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_266",
+            "next_step": "step_572"
+          },
+          {
+            "step": "step_572",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "The bank is open all days from Monday to Saturday from 9am to 3pm,with exception of 2nd Saturdays."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_572_result_1"
+              }
+            },
+            "variable": "step_572",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_266"
+                },
+                {
+                  "value": "Bank working days",
+                  "from_entity": "entity_13477"
+                }
+              ]
+            },
+            "next_step": "step_104"
+          },
+          {
+            "step": "step_104",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Chennai , Trichy, Madurai, Mylapore, Adyar, Anna Nagar, Velachery, Besant Nagar"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_104_result_1"
+              }
+            },
+            "variable": "step_104",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_266"
+                },
+                {
+                  "value": "List of Branches",
+                  "from_entity": "entity_13477"
+                }
+              ]
+            },
+            "next_step": "step_655"
+          },
+          {
+            "step": "step_655",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Chennai , Trichy, Madurai, Mylapore, Adyar, Anna Nagar, Velachery, Besant Nagar"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_655_result_1"
+              }
+            },
+            "variable": "step_655",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_266"
+                },
+                {
+                  "value": "Storage Locker Facility",
+                  "from_entity": "entity_13477"
+                }
+              ]
+            },
+            "next_step": "step_241"
+          },
+          {
+            "step": "step_241",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "All our Bank Branches have a Exchange Facility"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_241_result_1"
+              }
+            },
+            "variable": "step_241",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_266"
+                },
+                {
+                  "value": "Currency Conversion Facility",
+                  "from_entity": "entity_13477"
+                }
+              ]
+            },
+            "next_step": "step_585"
+          },
+          {
+            "step": "step_585",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "The information listed on your credit report includes several variables that CIBIL uses to set your credit score. CIBIL score, reflects the extent of the probability of default. An individual's credit history is submitted to CIBIL by banks and financial institutions on a monthly basis."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_585_result_1"
+              }
+            },
+            "variable": "step_585",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_266"
+                },
+                {
+                  "value": "CIBIL",
+                  "from_entity": "entity_13477"
+                }
+              ]
+            },
+            "next_step": "step_171"
+          },
+          {
+            "step": "step_171",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Kindly reach out to our customer care executive."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "contact us @ 9876543210"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action",
+              "invoke_action": {
+                "action": "action_42203",
+                "parameters": null,
+                "result_variable": "step_171_result_1"
+              }
+            },
+            "variable": "step_171",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_266"
+                },
+                {
+                  "value": "Find a nearest branch",
+                  "from_entity": "entity_13477"
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Query",
+        "action": "action_14515",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_14515_intent_36008"
+        },
+        "variables": [
+          {
+            "title": "Chennai , Trichy, Madurai, Mylapore, Adyar, Anna Nagar, Velacher",
+            "variable": "step_104",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_104_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "Kindly reach out to our customer care executive.",
+            "variable": "step_171",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_171_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "All our Bank Branches have a Exchange Facility",
+            "variable": "step_241",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_241_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "Select the general queries listed below.",
+            "variable": "step_266",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_500_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "The bank is open all days from Monday to Saturday from 9am to 3p",
+            "variable": "step_572",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_572_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "The information listed on your credit report includes several va",
+            "variable": "step_585",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_585_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_640_result_1",
+            "data_type": "any"
+          },
+          {
+            "title": "Chennai , Trichy, Madurai, Mylapore, Adyar, Anna Nagar, Velacher",
+            "variable": "step_655",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_655_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_807_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_830_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_850_result_1",
+            "data_type": "any"
+          },
+          {
+            "variable": "step_956_result_1",
+            "data_type": "any"
+          }
+        ],
+        "next_action": "action_23260",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true
+        },
+        "disambiguation_opt_out": false
+      }
+    ],
+    "intents": [
+      {
+        "intent": "action_21826_intent_9559",
+        "examples": [
+          {
+            "text": "Savings"
+          }
+        ]
+      },
+      {
+        "intent": "action_23260_intent_14492",
+        "examples": [
+          {
+            "text": "Net Banking"
+          }
+        ]
+      },
+      {
+        "intent": "action_32649_intent_33234",
+        "examples": [
+          {
+            "text": "Loan"
+          }
+        ]
+      },
+      {
+        "intent": "action_11109_intent_41544",
+        "examples": [
+          {
+            "text": "Current account"
+          },
+          {
+            "text": "Current"
+          }
+        ]
+      },
+      {
+        "intent": "action_14232_intent_42493",
+        "examples": [
+          {
+            "text": "Index"
+          }
+        ]
+      },
+      {
+        "intent": "action_41074_intent_49220",
+        "examples": [
+          {
+            "text": "Thanks"
+          },
+          {
+            "text": "thank you"
+          },
+          {
+            "text": "End greeting"
+          }
+        ]
+      },
+      {
+        "intent": "fallback_connect_to_agent",
+        "examples": [
+          {
+            "text": "Call agent"
+          },
+          {
+            "text": "Agent help"
+          },
+          {
+            "text": "I would like to speak to a human"
+          },
+          {
+            "text": "Can I connect to an agent?"
+          },
+          {
+            "text": "I would like to speak to someone"
+          }
+        ],
+        "description": "Please transfer me to an agent"
+      },
+      {
+        "intent": "action_42203_intent_15212",
+        "examples": [
+          {
+            "text": "End"
+          }
+        ]
+      },
+      {
+        "intent": "action_14515_intent_36008",
+        "examples": [
+          {
+            "text": "Query"
+          }
+        ]
+      },
+      {
+        "intent": "action_40275_intent_32670",
+        "examples": [
+          {
+            "text": "hey"
+          },
+          {
+            "text": "hi"
+          },
+          {
+            "text": "hello"
+          },
+          {
+            "text": "Greeting"
+          }
+        ]
+      }
+    ],
+    "entities": [
+      {
+        "entity": "entity_13477",
+        "values": [
+          {
+            "type": "synonyms",
+            "value": "Bank working days",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "Storage Locker Facility",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "List of Branches",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "Find a nearest branch",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "Currency Conversion Facility",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "CIBIL",
+            "synonyms": []
+          }
+        ],
+        "fuzzy_match": true
+      },
+      {
+        "entity": "entity_22119",
+        "values": [
+          {
+            "type": "synonyms",
+            "value": "General query",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "Loan enquiry",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "Net banking",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "Savings Account",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "Current Account",
+            "synonyms": []
+          }
+        ],
+        "fuzzy_match": true
+      },
+      {
+        "entity": "entity_42021",
+        "values": [
+          {
+            "type": "synonyms",
+            "value": "House loan",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "Gold loan",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "Student loan",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "Topup loan",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "Vehicle loan",
+            "synonyms": []
+          }
+        ],
+        "fuzzy_match": true
+      },
+      {
+        "entity": "entity_10364",
+        "values": [
+          {
+            "type": "synonyms",
+            "value": "Yes",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "No",
+            "synonyms": []
+          }
+        ],
+        "fuzzy_match": true
+      },
+      {
+        "entity": "entity_38021",
+        "values": [
+          {
+            "type": "synonyms",
+            "value": "what are the features of Net Banking?",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "Facing errors in Net Banking?",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "How do I register for Net Banking?",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "what is Net Banking?",
+            "synonyms": []
+          }
+        ],
+        "fuzzy_match": true
+      },
+      {
+        "entity": "entity_4939",
+        "values": [
+          {
+            "type": "synonyms",
+            "value": "proprietorship",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "partnership",
+            "synonyms": []
+          }
+        ],
+        "fuzzy_match": true
+      },
+      {
+        "entity": "entity_36531",
+        "values": [
+          {
+            "type": "synonyms",
+            "value": "Regular savings account",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "Zero balance savings account",
+            "synonyms": []
+          },
+          {
+            "type": "synonyms",
+            "value": "Kids savings account",
+            "synonyms": []
+          }
+        ],
+        "fuzzy_match": true
+      }
+    ],
+    "metadata": {
+      "api_version": {
+        "major_version": "v2",
+        "minor_version": "2018-11-08"
+      },
+      "skill": {
+        "counts": {
+          "actions": 12,
+          "intents": 10,
+          "entities": 7,
+          "data_types": 0,
+          "global_variables": 0
+        }
+      }
+    },
+    "variables": [],
+    "data_types": [],
+    "counterexamples": [],
+    "system_settings": {
+      "off_topic": {
+        "enabled": true
+      },
+      "topic_switch": {
+        "enabled": true,
+        "messages": {
+          "confirm_return": {
+            "text": "Return to previous topic?"
+          },
+          "confirm_switch": {
+            "text": "Switch from the current topic?"
+          }
+        },
+        "question_steps_threshold": 2
+      },
+      "disambiguation": {
+        "prompt": "Did you mean:",
+        "enabled": true,
+        "randomize": true,
+        "max_suggestions": 5,
+        "suggestion_text_policy": "title",
+        "none_of_the_above_prompt": "None of the above"
+      },
+      "intent_classification": {
+        "training_backend_version": "v2"
+      },
+      "spelling_auto_correct": true
+    },
+    "learning_opt_out": false,
+    "language": "en"
+  },
+  "description": "created for assistant ec91af6d-ab47-4856-b869-2f4e680c1b46",
+  "dialog_settings": {
+    "source_assistant": "15a69a10-6955-4c0a-854d-67c66862ad3b"
+  },
+  "created": "2022-11-18T04:39:09.764Z",
+  "updated": "2022-11-18T04:39:09.764Z",
+  "snapshot": "1",
+  "assistant_id": "ec91af6d-ab47-4856-b869-2f4e680c1b46",
+  "assistant_references": [
+    {
+      "name": "Banking chatbot",
+      "assistant_id": "15a69a10-6955-4c0a-854d-67c66862ad3b",
+      "skill_reference": "actions skill"
+    }
+  ]
+}
